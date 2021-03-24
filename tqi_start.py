@@ -2,18 +2,6 @@ from os import popen, kill, system
 import time
 import sys
 import subprocess
-import docker_control
-
-def open_dev():
-    popen('prospect-mail')
-    popen('slack')
-    popen('code')
-    popen('/snap/intellij-idea-community/273/bin/idea.sh')
-    popen('teams')
-    popen('/usr/local/pulse/pulseUi')
-
-def restart_docker_images():
-    docker_control.check_and_restart(docker_control.consumer_images)
 
 def open_casual():
     popen('xdg-open https://web.whatsapp.com/')
@@ -27,13 +15,28 @@ def open_casual():
     popen('xdg-open https://trello.com/b/FayUjhWu/fugenda')
     # popen('spotify')
 
+def open_work():
+    popen('prospect-mail')
+    popen('slack')
+    popen('teams')
+    popen('code')
+    popen('xdg-open https://jiraps.atlassian.net/secure/RapidBoard.jspa?rapidView=661')
+
+def open_dev():
+    popen('/snap/intellij-idea-community/273/bin/idea.sh')
+    popen('/usr/local/pulse/pulseUi')
+    restart_docker_images()
+
+def restart_docker_images():
+    docker_control.check_and_restart(docker_control.consumer_images)
+
 def kill_processes():
     process_name = [
         'prospect-mail',
         'slack',
         'code',
         'idea.sh',
-        'teams',
+        # 'teams',
         'pulseUi',
         'chrome',
         'spotify'
@@ -51,10 +54,10 @@ def open_selector(intensity):
         open_casual()
 
     if intensity >= 2:
-        open_dev()
+        open_work()
         
     if intensity >= 3:
-        restart_docker_images()
+        open_dev()
 
 if __name__ == "__main__":
     kill_processes()
